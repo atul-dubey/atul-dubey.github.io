@@ -1,6 +1,5 @@
 ## Personal Portfolio Website
-Optimizing my Life and reducing human efforts using machine learning. Currently working in computer vision problems. Interested in
-robotics intelligence particularly in reinforcement learning and autonomous driving.
+Lifelong learner, working towards improving the quality of life of people with IoT and Automation. Interested in driving the innovation and entrepreneurial spirit in India.
 
-**[View Live](https://karanpathak.github.io/)**
+**[View Live](https://www.atuldubey.in)**
 
