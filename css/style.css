@@ -29,7 +29,11 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 
+  --primary-color: #007bff; /* Main theme color */
+  --secondary-color: #343a40;
+  --accent-color: #f96d00;
+  --background-color: #f8f9fa;}
 
 *,
 *::before,
@@ -2071,10 +2075,14 @@ fieldset:disabled a.btn {
   pointer-events: none; }
 
 .btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   color: #fff;
   background-color: #007bff;
   border-color: #007bff; }
   .btn-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     color: #fff;
     background-color: #0069d9;
     border-color: #0062cc; }
@@ -8171,12 +8179,15 @@ h1, h2, h3, h4, h5,
 
 .ftco-navbar-light {
   background: transparent !important;
-  position: absolute;
+  background-color: var(--background-color);
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 3;
-  color:#000; }
+  z-index: 1000;
+  color:#000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+ }
   @media (max-width: 991.98px) {
     .ftco-navbar-light {
       background: #000000 !important;
@@ -9805,3 +9816,33 @@ textarea.form-control {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.opaque-image {
+  width: 100%;
+  height: auto;
+  opacity: 0.5; /* Adjust opacity as needed */
+}
+
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  z-index: 2; /* Ensures the text appears above the image */
+}
+
+.project {
+  position: relative;
+  overflow: hidden;
+}
+
+.project .opaque-image {
+  transition: transform 0.3s ease;
+}
+
+.project:hover .opaque-image {
+  transform: scale(1.05);
+}
