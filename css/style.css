@@ -1,6 +1,3 @@
-/*!
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -1413,7 +1410,7 @@ pre {
 .table-success,
 .table-success > th,
 .table-success > td {
-  background-color: #c3e6cb; }
+  background-color: #c3e1e6; }
 
 .table-success th,
 .table-success td,
