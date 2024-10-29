@@ -71,7 +71,8 @@
         <div class="col-lg-8 ftco-animate">
           <h2 class="mb-3">Summary</h2>
           <p>With the advancements in technology, the Cyber World is getting more and more
-            vulnerable to hacking. One of the ways to attack physical systems is by social engineering people to insert an infected device into their computers. Modern operating
+            vulnerable to hacking. One of the ways to attack physical systems is by social 
+            engineering people to insert an infected device into their computers. Modern operating
             systems (like Windows, Linux, MAC, etc.) are configured to allow HID-class devices
             to communicate with the system without any restrictions. The USB devices that can
             be programmed to portray as HID class devices are readily available in the market.
@@ -85,13 +86,13 @@
             In this project, I worked on two-fold approach.
             First, building secure firmware for HID class devices to provide an authentication
             mechanism when connected to a system. And, the second is building computer
-            software that can authenticate the HID class devices and block the unsecure ones.</p>
+            software that can authenticate the HID class devices and block the unsecure ones.
+          </p>
 
             <h2 class="mb-3">Secure HID device Firmware</h2>
             <p>The firmware designed used the keystroke injection mechanism to authenticate itself. I used the 
               RP2040 based development board with CircuitPython to build the device. The keystrokes for the authentication mechanism 
               can be easily programmed using a text file uploaded to the micro-controller.
-
             </p>
 
             <h2 class="mb-3">Python Script to authenticate secure device</h2>
@@ -99,32 +100,11 @@
             HID device plugged in and matches their VID and PID. Once VID and PID are identified as genuine, it starts reading the keystrokes
             from the device. The entered keystrokes are then matched with the keys stored in an encrypted file within the computer. Once the
             keystrokes and stored key match, the device is allowed to work as normal HID device. Otherwise, it is ejected from the device and 
-            blocked from future access.</p>
+            blocked from future access.
+          </p>
             <p>
               <img src="../../images/tech_projects/hid_computer_end_script_flowchart.png" alt="" class="img-fluid">
             </p>
-
-          <!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-            <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">Life</a>
-              <a href="#" class="tag-cloud-link">Sport</a>
-              <a href="#" class="tag-cloud-link">Tech</a>
-              <a href="#" class="tag-cloud-link">Travel</a>
-            </div>
-          </div> -->
-
-          <!-- <div class="about-author d-flex p-4 bg-light">
-            <div class="bio mr-5">
-              <img src="../../images/me1.jpg" alt="Image placeholder" class="img-fluid mb-3">
-            </div>
-            <div class="desc">
-              <h3>Atul Dubey</h3>
-              <p>Atul is a passionate hardware and IoT professional, helping business to build 
-                solutions. He also likes to share his learnings and experience with people and 
-                provides trainings on various technologies.
-              </p>
-            </div>
-          </div> -->
         </div> <!-- .col-md-8 -->
 
 
