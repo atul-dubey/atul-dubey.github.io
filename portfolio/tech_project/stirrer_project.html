@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>Cervical cancer detection using deep learning on liquid-based cytology pap smear images</title>
+  <title>Automate stirring control system for Biology lab</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -49,17 +49,13 @@
     </div>
   </nav>
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/cervical_cancer.jpg');"
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/tech_projects/stirrer_project/st3.jpg"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate pb-5 text-center">
-          <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                  class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a href="blog.html">Blog <i
-                  class="fa fa-chevron-right"></i></a></span> <span>Blog Single <i
-                class="fa fa-chevron-right"></i></span></p> -->
-          <h1 class="mb-0">Cervical cancer detection using deep learning on liquid-based cytology pap smear images</h1>
+          <h1 class="mb-0">Automate stirring and heating control system for Biology lab</h1>
         </div>
       </div>
     </div>
@@ -71,121 +67,43 @@
         <div class="col-lg-8 ftco-animate">
           <h2 class="mb-3">Summary</h2>
           <p>
-            <b>Presented:</b> 2024 IEEE International Conference on Artificial Intelligence in Engineering and Technology (IICAIET), Pacific Sutera Hotel, Kota Kinabalu, Sabah, Malaysia</br></br>
-            Cervical cancer is a significant cause of death
-            around the world. In 2022, 660,000 individuals have been diagnosed with the disease around the world and 350,000 individuals
-            have died as a result of it. Current methods of diagnosis require
-            pathologists to look at the cells under a microscope, which is
-            subjective and time-consuming. We present a deep learningbased detection method to automatically classify four different
-            stages (High squamous intra-epithelial lesion, Negative for intraepithelial malignancy, Low squamous intra-epithelial lesion, and
-            Squamous cell carcinoma) of cervical cancer. In this study, we
-            choose to experiment with a lightweight model like the MobileNetV2 model which can be deployed in hardware-constrained
-            scenarios, to evaluate its performance in the preliminary diagnosis of cervical cancer. Our model achieved a validation
-            accuracy of 98.95% and a test accuracy of 94.68%. These results
-            demonstrate the potential effectiveness of the MobileNetV2 model
-            in aiding the early detection of cervical cancer, highlighting its
-            applicability in medical diagnosis tasks.</p>
-          <!-- <p>
-            <img src="../../images/image_3.jpg" alt="" class="img-fluid">
-          </p> -->
+            The requirement here was to design a mechanism that can take care of stirring liquid at a constant speed while maintaining a constant 
+            temperature around the liquid. The features implemented in the system are:
+            <ul>
+              <li>Stirrer with closed loop RPM feedback</li>
+              <li>Cylindrical heater with closed loop temperature feedback</li>
+              <li>Button to switch between setting mode to running mode</li>
+              <li>OLED screen to show the current values (RPM and temperature) and set values</li>
+              <li>2 Knobs to adjust RPM and Temperature</li>
+            </ul>
 
-          <!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-            <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">Life</a>
-              <a href="#" class="tag-cloud-link">Sport</a>
-              <a href="#" class="tag-cloud-link">Tech</a>
-              <a href="#" class="tag-cloud-link">Travel</a>
-            </div>
-          </div> -->
+            To control RPM and temperature values, I have used L298 PWM driver. There is a separate power converter to power the ESP32 
+            controller, to ensure the fluctuations from the load should not reset it. </br></br>
+            I have implemented PID algorithm to ensure the smooth control of RPM of the motor.
 
-          <!-- <div class="about-author d-flex p-4 bg-light">
-            <div class="bio mr-5">
-              <img src="../../images/me1.jpg" alt="Image placeholder" class="img-fluid mb-3">
-            </div>
-            <div class="desc">
-              <h3>Atul Dubey</h3>
-              <p>Atul is a passionate hardware and IoT professional, helping business to build 
-                solutions. He also likes to share his learnings and experience with people and 
-                provides trainings on various technologies.
-              </p>
-            </div>
-          </div> -->
+          </p>
+
         </div> <!-- .col-md-8 -->
 
 
         <div class="col-lg-4 sidebar ftco-animate">
-          <!-- <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Project info</h3>
-            <ul class="categories">
-             <li><a href="#">Difficulty <span>Hard</span> </a></li>
-             <li><a href="#">Time Estimate <span>12 Hours</span></a></li>
-           </ul>
-         </div>
-          <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Related projects</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
 
           <div class="sidebar-box ftco-animate">
             <h3 class="heading-sidebar">Tag Cloud</h3>
             <div class="tagcloud">
-              <a href="" class="tag-cloud-link">Deep Learning</a>
-              <a href="" class="tag-cloud-link">pap smear</a>
-              <a href="" class="tag-cloud-link">Computer vision</a>
-              <a href="" class="tag-cloud-link">Classification</a>
-              <a href="" class="tag-cloud-link">Cervical Cancer</a>
-              <!-- <a href="" class="tag-cloud-link">YOLOv8</a> -->
-              <a href="" class="tag-cloud-link">Transfer Learning</a>
+              <a href="" class="tag-cloud-link">L298 driver</a>
+              <a href="" class="tag-cloud-link">ESP32S3</a>
+              <a href="" class="tag-cloud-link">Arduino</a>
+              <a href="" class="tag-cloud-link">Closed loop control</a>
+              <a href="" class="tag-cloud-link">PID control</a>
             </div>
           </div>
           <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Paper source</h3>
+            <h3 class="heading-sidebar">Source code</h3>
             <div class="tagcloud">
-              <a href="https://doi.org/10.1109/IICAIET62352.2024.10730384" class="tag-cloud-link" target="_blank">doi link</a>
+              <a href="" class="tag-cloud-link" target="_blank">Github</a>
             </div>
           </div>
-
-          <!-- <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Paragraph</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate
-              quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos
-              fugit cupiditate numquam!</p>
-          </div> -->
         </div>
 
       </div>
@@ -194,16 +112,46 @@
               <div class="col-md-12">
                 <h2 class="mb-3 mt-5">Image Gallery</h2>
                 <div class="row">
-                  <!-- <div class="col-lg-3 col-md-4 col-6">
-                    <a href="../../images/textile_compass_2024/comparison.png" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/textile_compass_2024/comparison.png">
-                      <img class="img-fluid img-thumbnail" src="../../images/textile_compass_2024/comparison.png" alt="">
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st1.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st1.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st1.jpg" alt="">
                     </a>
                   </div>
                   <div class="col-lg-3 col-md-4 col-6">
-                    <a href="../../images/textile_compass_2024/1.png" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/textile_compass_2024/1.png">
-                      <img class="img-fluid img-thumbnail" src="../../images/textile_compass_2024/1.png" alt="">
+                    <a href="../../images/tech_projects/stirrer_project/st2.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st2.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st2.jpg" alt="">
                     </a>
-                  </div> -->
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st3.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st3.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st3.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st4.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st4.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st4.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st5.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st5.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st5.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st6.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st6.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st6.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st7.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st7.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st7.jpg" alt="">
+                    </a>
+                  </div>
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/stirrer_project/st8.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/stirrer_project/st8.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/stirrer_project/st8.jpg" alt="">
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>Cervical cancer detection using deep learning on liquid-based cytology pap smear images</title>
+  <title>Device to monitor Muscle potential (Electromyography)</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -49,17 +49,13 @@
     </div>
   </nav>
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/cervical_cancer.jpg');"
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/tech_projects/emg_device/emg15.jpg"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate pb-5 text-center">
-          <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                  class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a href="blog.html">Blog <i
-                  class="fa fa-chevron-right"></i></a></span> <span>Blog Single <i
-                class="fa fa-chevron-right"></i></span></p> -->
-          <h1 class="mb-0">Cervical cancer detection using deep learning on liquid-based cytology pap smear images</h1>
+          <h1 class="mb-0">Device to monitor Muscle potential (Electromyography)</h1>
         </div>
       </div>
     </div>
@@ -70,122 +66,117 @@
       <div class="row">
         <div class="col-lg-8 ftco-animate">
           <h2 class="mb-3">Summary</h2>
-          <p>
-            <b>Presented:</b> 2024 IEEE International Conference on Artificial Intelligence in Engineering and Technology (IICAIET), Pacific Sutera Hotel, Kota Kinabalu, Sabah, Malaysia</br></br>
-            Cervical cancer is a significant cause of death
-            around the world. In 2022, 660,000 individuals have been diagnosed with the disease around the world and 350,000 individuals
-            have died as a result of it. Current methods of diagnosis require
-            pathologists to look at the cells under a microscope, which is
-            subjective and time-consuming. We present a deep learningbased detection method to automatically classify four different
-            stages (High squamous intra-epithelial lesion, Negative for intraepithelial malignancy, Low squamous intra-epithelial lesion, and
-            Squamous cell carcinoma) of cervical cancer. In this study, we
-            choose to experiment with a lightweight model like the MobileNetV2 model which can be deployed in hardware-constrained
-            scenarios, to evaluate its performance in the preliminary diagnosis of cervical cancer. Our model achieved a validation
-            accuracy of 98.95% and a test accuracy of 94.68%. These results
-            demonstrate the potential effectiveness of the MobileNetV2 model
-            in aiding the early detection of cervical cancer, highlighting its
-            applicability in medical diagnosis tasks.</p>
-          <!-- <p>
-            <img src="../../images/image_3.jpg" alt="" class="img-fluid">
-          </p> -->
+          <p>The project involves developing an Internet of Things (IoT) device that measures electromyography (EMG) 
+            signals—electrical activities produced by skeletal muscles. This device captures real-time muscle activity data and 
+            transmits it wirelessly via Bluetooth Low Energy (BLE) to a mobile or web application. The use of BLE ensures efficient, 
+            low-power communication, making the device portable and suitable for continuous monitoring.</br></br>
 
-          <!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-            <div class="tagcloud">
-              <a href="#" class="tag-cloud-link">Life</a>
-              <a href="#" class="tag-cloud-link">Sport</a>
-              <a href="#" class="tag-cloud-link">Tech</a>
-              <a href="#" class="tag-cloud-link">Travel</a>
-            </div>
-          </div> -->
+            The collected EMG data can be utilized for various applications, such as controlling prosthetic limbs, monitoring muscle health in rehabilitation, enhancing athletic performance through muscle analysis, or enabling gesture-based controls in interactive systems. By integrating EMG signal acquisition with IoT connectivity, the device offers a versatile platform for advanced muscle analysis and remote data accessibility.
+          </p>
 
-          <!-- <div class="about-author d-flex p-4 bg-light">
-            <div class="bio mr-5">
-              <img src="../../images/me1.jpg" alt="Image placeholder" class="img-fluid mb-3">
+          <h2 class="mb-3">Circuit Design</h2>
+            <p>I have used ESP32S3 base development board to process the EMG signal. The EMG sensor is BioAmp EXG pill from Upside down labs.
+              The sensor itself is capable of monitoring EMG, ECG, and EEG signal with a tiny configuration. I have also included motion sensor
+              (MPU6050) in the device to calibrate the EMG data with actual motion signal. The circuit was designed using KiCAD EDA.
+            </p>
+            <div class="row">
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/schematic.png" alt="Snow" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/pcb.png" alt="Forest" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/pcb_3d.png" alt="Mountains" style="width:100%">
+              </div>
             </div>
-            <div class="desc">
-              <h3>Atul Dubey</h3>
-              <p>Atul is a passionate hardware and IoT professional, helping business to build 
-                solutions. He also likes to share his learnings and experience with people and 
-                provides trainings on various technologies.
-              </p>
-            </div>
-          </div> -->
+          </br></br>
+            <p>
+              The final circuit was then printed on a board using toner transfer method. The below images show the sequence of steps from
+              printing to final etching of the circuit using Ferric Chloride.
+            </p>
+            <div class="row">
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg11.jpg" alt="Snow" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg10.jpg" alt="Forest" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg8.jpg" alt="Mountains" style="width:100%">
+              </div>
+            </div></br></br>
+            Finally, the component were soldered on the board and I tested for the faults using continuity tester.
+            <div class="row">
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg9.jpg" alt="Snow" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg4.jpg" alt="Forest" style="width:100%">
+              </div>
+            </div></br></br>
+            <h2 class="mb-3">Casing Design</h2>
+            <p>
+              The casing for the device was designed using Fusion360. The casing consists of 2 parts, bottom and lid. The final design was 
+              then printed using Bambu Lab A1 3D printer.
+            </p>
+            <div class="row">
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg12.png" alt="Snow" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg13.png" alt="Forest" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg14.jpg" alt="Mountains" style="width:100%">
+              </div>
+            </div></br></br>
+
+            <h2 class="mb-3">Final Assembly</h2>
+            The PCB board is placed inside the bottom and then lid is closed as per the defined slots. The EMG electrodes for the device 
+            are placed in a band that can be wore as the muscle potential measurement requirement.
+            <div class="row">
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg1.jpg" alt="Snow" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg2.jpg" alt="Forest" style="width:100%">
+              </div>
+              <div class="column" style="width:33.3%">
+                <img src="../../images/tech_projects/emg_device/emg3.jpg" alt="Mountains" style="width:100%">
+              </div>
+            </div></br></br>
+
+
+            <h2 class="mb-3">Firmware for reading data and transmitting signal</h2>
+            <p>
+              As per requirement, the firmware is designed to read the EMG signal and motion sensor data and broadcast it over a specified
+              address over BLE channel. To test the transmission I have created a python script that used Bleak python module and receives 
+              and visualizes the sensor data.
+
+          </p>
+
         </div> <!-- .col-md-8 -->
 
 
         <div class="col-lg-4 sidebar ftco-animate">
-          <!-- <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Project info</h3>
-            <ul class="categories">
-             <li><a href="#">Difficulty <span>Hard</span> </a></li>
-             <li><a href="#">Time Estimate <span>12 Hours</span></a></li>
-           </ul>
-         </div>
-          <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Related projects</h3>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-            <div class="block-21 mb-4 d-flex">
-              <a class="blog-img mr-4" style="background-image: url(images/image_3.jpg);"></a>
-              <div class="text">
-                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a>
-                </h3>
-                <div class="meta">
-                  <div><a href="#"><span class="icon-calendar"></span> July 03, 2020</a></div>
-                  <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                  <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                </div>
-              </div>
-            </div>
-          </div> -->
 
           <div class="sidebar-box ftco-animate">
             <h3 class="heading-sidebar">Tag Cloud</h3>
             <div class="tagcloud">
-              <a href="" class="tag-cloud-link">Deep Learning</a>
-              <a href="" class="tag-cloud-link">pap smear</a>
-              <a href="" class="tag-cloud-link">Computer vision</a>
-              <a href="" class="tag-cloud-link">Classification</a>
-              <a href="" class="tag-cloud-link">Cervical Cancer</a>
-              <!-- <a href="" class="tag-cloud-link">YOLOv8</a> -->
-              <a href="" class="tag-cloud-link">Transfer Learning</a>
+              <a href="" class="tag-cloud-link">Electromyography</a>
+              <a href="" class="tag-cloud-link">ESP32S3</a>
+              <a href="" class="tag-cloud-link">Arduino</a>
+              <a href="" class="tag-cloud-link">Bio signal</a>
+              <a href="" class="tag-cloud-link">Motion sensing</a>
             </div>
           </div>
           <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Paper source</h3>
+            <h3 class="heading-sidebar">Source code</h3>
             <div class="tagcloud">
-              <a href="https://doi.org/10.1109/IICAIET62352.2024.10730384" class="tag-cloud-link" target="_blank">doi link</a>
+              <a href="" class="tag-cloud-link" target="_blank">Github</a>
             </div>
           </div>
-
-          <!-- <div class="sidebar-box ftco-animate">
-            <h3 class="heading-sidebar">Paragraph</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate
-              quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos
-              fugit cupiditate numquam!</p>
-          </div> -->
         </div>
 
       </div>
