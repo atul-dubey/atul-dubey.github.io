@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>Deep tech projects</title>
+  <title>AI Voice calling assistant</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,7 +27,7 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-  <nav class="navbar navbar-expand-lg ftco-navbar-light ftco_navbar bg-light ftco-navbar-light site-navbar-target"
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target"
     id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="../../index.html">Atul<span>.</span></a>
@@ -49,53 +49,97 @@
     </div>
   </nav>
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/ai.svg');"
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/tech_projects/ai_calling_2.jpg"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate pb-5 text-center">
-          <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                  class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a href="blog.html">Blog <i
-                  class="fa fa-chevron-right"></i></a></span> <span>Blog Single <i
-                class="fa fa-chevron-right"></i></span></p> -->
-          <h1 class="mb-2">Deep Tech Projects</h1>
+          <h1 class="mb-0">AI Voice calling assistant</h1>
         </div>
       </div>
     </div>
   </section>
 
-  	<!-- Blog -->
-	<section class="ftco-section" id="blog-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-5">
-				<div class="col-md-7 heading-section text-center ftco-animate">
-					<!-- <span class="subheading">Details</span> -->
-					<h2 class="mb-4">AI, ML, Deep Learning, LLMs, etc. related projects</h2>
-					<p>Summary and source links of the deep tech projects</p>
-				</div>
-			</div>
-			<div class="row d-flex">
-				<!-- Project | AI Voice calling -->
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="../tech_project/ai_voice_calling.html" class="block-20" style="background-image: url('../../images/tech_projects/ai_calling.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<div class="d-flex align-items-center mb-3 meta">
-								<p class="mb-0">
-									<span class="mr-2"><strong>Project</strong> | Dec, 2024 </span><br>
-								</p>
-							</div>
-							<h3 class="heading"><a href="../tech_project/ai_voice_calling.html">AI Voice calling assistant</a>
-							</h3>
-							<p>There are a lot of redundancies in customer support and lead generation process that can be easily replaced by AIs</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 ftco-animate">
+          <h2 class="mb-3">Summary</h2>
+          <p>
+            Customer support and lead generation have many steps that are redundant and can be easily replace by AI. The objective 
+            of this project is to automate this mundane task using an AI in such a way that when a customer calls, it should be able 
+            to provide basics information and collect required information from the customer. I have used OpenAI Realtime API with 
+            Twilio API to implement this. A python script runs on backend to facilitate the communication between AI and customer. Following 
+            features are implemented to enable this:
+            <ul>
+              <li>A designated number for AI</li>
+              <li>OpenAI Realtime API session management</li>
+              <li>Responding the customer queries and recording the information</li>
+              <li>Storing the collected information in a database</li>
+              <li>Scheduling meeting and calendar invited with the customers</li>
+            </ul>
+            
+
+          </p>
+
+        </div> <!-- .col-md-8 -->
+
+
+        <div class="col-lg-4 sidebar ftco-animate">
+
+          <div class="sidebar-box ftco-animate">
+            <h3 class="heading-sidebar">Tag Cloud</h3>
+            <div class="tagcloud">
+              <a href="" class="tag-cloud-link">OpenAI Realtime API</a>
+              <a href="" class="tag-cloud-link">Twilio</a>
+              <a href="" class="tag-cloud-link">GCP</a>
+              <a href="" class="tag-cloud-link">Python</a>
+              <a href="" class="tag-cloud-link">Raspberry</a>
+            </div>
+          </div>
+          <div class="sidebar-box ftco-animate">
+            <h3 class="heading-sidebar">Source code</h3>
+            <div class="tagcloud">
+              <a href="" class="tag-cloud-link" target="_blank">Github</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+            <!-- Bootstrap Image Gallery -->
+            <div class="row">
+              <div class="col-md-12">
+                <h2 class="mb-3 mt-5">Image Gallery</h2>
+                <div class="row">
+                  <!-- <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/gaufit/gft1.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/gaufit/gft1.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/gaufit/gft1.jpg" alt="">
+                    </a>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+      
+            <!-- Gallery Modal -->
+            <div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">Image Gallery</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <img id="galleryModalImg" class="img-fluid" src="" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+  </section> <!-- .section -->
+
 
   	<!-- Footer -->
 	<footer class="ftco-footer ftco-section">
@@ -188,7 +232,14 @@
   <script src="../../js/google-map.js"></script>
 
   <script src="../../js/main.js"></script>
-
+  <script>
+    $('#galleryModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var imgUrl = button.data('img-url') // Extract info from data-* attributes
+      var modal = $(this)
+      modal.find('.modal-body img').attr('src', imgUrl)
+    })
+  </script>
 </body>
 
 </html>
