@@ -4,7 +4,7 @@
 
 
 <head>
-  <title>Arduino, Raspberry pi, Jetson nano</title>
+  <title>Blind assist device to help them navigate better</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,7 +27,7 @@
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
-  <nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light site-navbar-target"
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target"
     id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="../../index.html">Atul<span>.</span></a>
@@ -49,107 +49,96 @@
     </div>
   </nav>
 
-  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/bg_4.jpg');"
+  <section class="hero-wrap hero-wrap-2" style="background-image: url('../../images/tech_projects/blind_stick.jpg"
     data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
       <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate pb-5 text-center">
-          <!-- <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
-                  class="fa fa-chevron-right"></i></a></span> <span class="mr-2"><a href="blog.html">Blog <i
-                  class="fa fa-chevron-right"></i></a></span> <span>Blog Single <i
-                class="fa fa-chevron-right"></i></span></p> -->
-          <h1 class="mb-0">Arduino, Raspberry Pi, and Jetson Related projects</h1>
+          <h1 class="mb-0">Blind assist device to help them navigate better</h1>
         </div>
       </div>
     </div>
   </section>
 
-  	<!-- Blog -->
-	<section class="ftco-section" id="blog-section">
-		<div class="container">
-			<div class="row justify-content-center mb-5 pb-5">
-				<div class="col-md-7 heading-section text-center ftco-animate">
-					<!-- <span class="subheading">Details</span> -->
-					<h2 class="mb-4">Projects that have used Arduino, Raspberry pi, and Jetson Nano</h2>
-					<!-- <p>Step-by-step guides, technology overview, latest products etc.</p> -->
-				</div>
-			</div>
-			<div class="row d-flex">
-				<!-- Project | EMG Device -->
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="../tech_project/emg_device.html" class="block-20" style="background-image: url('../../images/tech_projects/emg_device/emg3.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<div class="d-flex align-items-center mb-3 meta">
-								<p class="mb-0">
-									<span class="mr-2"><strong>Project</strong> | Oct, 2024 </span><br>
-								</p>
-							</div>
-							<h3 class="heading"><a href="../tech_project/emg_device.html">Device to monitor Muscle potential (Electromyography)</a>
-							</h3>
-							<p>Muscles generate a tiny electrical potential when they receive signal from our brain. This can be used for multiple 
-								applications like robot control, exoskeletons, prosthetics, etc.
-							</p>
-						</div>
-					</div>
-				</div>
-				<!-- Project | gaufit -->
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="../tech_project/embrio_transplant.html" class="block-20" style="background-image: url('../../images/tech_projects/gaufit/gft10.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<div class="d-flex align-items-center mb-3 meta">
-								<p class="mb-0">
-									<span class="mr-2"><strong>Project</strong> | Dec, 2023 </span><br>
-								</p>
-							</div>
-							<h3 class="heading"><a href="../tech_project/embrio_transplant.html">Gaufit: A Fitness tracker for cows</a>
-							</h3>
-							<p>Tracking health and heat cycle of livestock is very important for farmers. This device give them enough insights to act faster.</p>
-						</div>
-					</div>
-				</div>				
-				<!-- Project | Blind assist device -->
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="../tech_project/ai_voice_calling.html" class="block-20" style="background-image: url('../../images/tech_projects/rpi.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<div class="d-flex align-items-center mb-3 meta">
-								<p class="mb-0">
-									<span class="mr-2"><strong>Project</strong> | July, 2024 </span><br>
-								</p>
-							</div>
-							<h3 class="heading"><a href="../tech_project/ai_voice_calling.html">Blind assist device to help them navigate better</a>
-							</h3>
-							<p>Its very hard for blind people to navigate around. Using AI and hardware, we can ease their life a little bit.</p>
-						</div>
-					</div>
-				</div>
+  <section class="ftco-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 ftco-animate">
+          <h2 class="mb-3">Summary</h2>
+          <p>
+            Blind people have myriad of challenges and one of them most important one is navigating outdoor in the streets. Al lot of 
+            accidents happen because of they not able to understand the vehicle, traffic lights, etc. The device we built uses a camera, a speaker
+            and a raspberry pi to see things around the person and speak it out loud. We have trained an YOLOv8 model to identify some of 
+            the general stuff that any person will encounter outdoor and the model runs on device itself. Some of the features implemented are:
+            <ul>
+              <li>Battery powered device that can fit onto a normal blind stick</li>
+              <li>On device inferencing for offline and fast operation</li>
+              <li>Light Weight and realtime object detection model</li>
+              <li>Onboard speaker to speak out the detected objects and their relative location</li>
+            </ul>
 
-				<!-- Project | HID Attack -->
-				<div class="col-md-4 d-flex ftco-animate">
-					<div class="blog-entry justify-content-end">
-						<a href="../tech_project/hid_attack.html" class="block-20" style="background-image: url('../../images/tech_projects/hid.jpg');">
-						</a>
-						<div class="text mt-3 float-right d-block">
-							<div class="d-flex align-items-center mb-3 meta">
-								<p class="mb-0">
-									<span class="mr-2"><strong>Project</strong> | Dec, 2022 </span><br>
-								</p>
-							</div>
-							<h3 class="heading"><a href="../tech_project/hid_attack.html">Detection and prevention of HID attacks</a>
-							</h3>
-							<p>Human's curiosity can be social engineered to make them do things involuntarily. Human Interface Device (HID) attacks are one of the most dangerous attacks that leverage this human trait.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+            We have also prepared a version of the device that uses OpenAI API to describe the scene.
+
+          </p>
+
+        </div> <!-- .col-md-8 -->
+
+
+        <div class="col-lg-4 sidebar ftco-animate">
+
+          <div class="sidebar-box ftco-animate">
+            <h3 class="heading-sidebar">Tag Cloud</h3>
+            <div class="tagcloud">
+              <a href="" class="tag-cloud-link">Raspberry Pi</a>
+              <a href="" class="tag-cloud-link">YOLOv8</a>
+              <a href="" class="tag-cloud-link">Python</a>
+              <a href="" class="tag-cloud-link">Deep Learning</a>
+              <a href="" class="tag-cloud-link">Object detection</a>
+            </div>
+          </div>
+          <div class="sidebar-box ftco-animate">
+            <h3 class="heading-sidebar">Source code</h3>
+            <div class="tagcloud">
+              <a href="" class="tag-cloud-link" target="_blank">Github</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+            <!-- Bootstrap Image Gallery -->
+            <div class="row">
+              <div class="col-md-12">
+                <h2 class="mb-3 mt-5">Image Gallery</h2>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 col-6">
+                    <a href="../../images/tech_projects/rpi.jpg" class="d-block mb-4 h-100" data-toggle="modal" data-target="#galleryModal" data-img-url="../../images/tech_projects/rpi.jpg">
+                      <img class="img-fluid img-thumbnail" src="../../images/tech_projects/rpi.jpg" alt="">
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Gallery Modal -->
+            <div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="galleryModalLabel">Image Gallery</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <img id="galleryModalImg" class="img-fluid" src="" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+  </section> <!-- .section -->
+
 
   	<!-- Footer -->
 	<footer class="ftco-footer ftco-section">
@@ -242,7 +231,14 @@
   <script src="../../js/google-map.js"></script>
 
   <script src="../../js/main.js"></script>
-
+  <script>
+    $('#galleryModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var imgUrl = button.data('img-url') // Extract info from data-* attributes
+      var modal = $(this)
+      modal.find('.modal-body img').attr('src', imgUrl)
+    })
+  </script>
 </body>
 
 </html>
