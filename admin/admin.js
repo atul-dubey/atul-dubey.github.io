@@ -3,9 +3,9 @@
 //  Target: window.portfolioConfig.API_BASE
 // =========================================================
 
-const API_BASE = (window.portfolioConfig && window.portfolioConfig.API_BASE) 
-                 ? window.portfolioConfig.API_BASE 
-                 : (window.CONFIG ? window.CONFIG.API_BASE : '');const TOKEN_KEY = "token"; // Unified token key
+const API_BASE = (window.portfolioConfig && window.portfolioConfig.API_BASE)
+  ? window.portfolioConfig.API_BASE
+  : (window.CONFIG ? window.CONFIG.API_BASE : ''); const TOKEN_KEY = "token"; // Unified token key
 
 // --- 1. GLOBAL HELPERS -----------------------------------
 
@@ -14,6 +14,13 @@ const getAuthHeaders = () => ({
   "Content-Type": "application/json",
   Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
 });
+
+// Clean relative image URLs (images/...) -> /images/...
+const resolveImageURL = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('/')) return url;
+  return '/' + url;
+};
 
 // Generic Toast Notification
 window.showToast = function (msg, type = "success") {
@@ -37,6 +44,11 @@ function setupImagePreview(inputId, hiddenId, previewId, containerId) {
   input.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        window.showToast("File size limit is 3MB", "danger");
+        e.target.value = "";
+        return;
+      }
       const reader = new FileReader();
       reader.onload = (evt) => {
         document.getElementById(hiddenId).value = evt.target.result;
@@ -53,14 +65,48 @@ function setupImagePreview(inputId, hiddenId, previewId, containerId) {
 }
 
 // --- 2. AUTHENTICATION -----------------------------------
-(function checkAuth() {
-  if (window.location.pathname.includes("login.html")) return;
-  if (!localStorage.getItem(TOKEN_KEY)) window.location.href = "./login.html";
-})();
+async function checkAuth() {
+  if (window.location.pathname.includes("login")) return;
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    window.location.href = "./login.html";
+    return;
+  }
+
+  // Verify token validity with backend
+  try {
+    const res = await fetch(`${API_BASE}/admin/verify`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) {
+      throw new Error("Invalid token");
+    }
+    // Auth succeeded! Display the CMS
+    document.body.style.display = "block";
+  } catch (err) {
+    console.error("Auth check failed:", err);
+    localStorage.removeItem(TOKEN_KEY);
+    window.location.href = "./login.html";
+  }
+}
+checkAuth();
 
 window.logout = function () {
   localStorage.removeItem(TOKEN_KEY);
   window.location.href = "login.html";
+};
+
+// Global Fetch Interceptor for 401 Unauthorized
+const originalFetch = window.fetch;
+window.fetch = async function (...args) {
+  const response = await originalFetch(...args);
+  if (response.status === 401 && !window.location.pathname.includes("login")) {
+    localStorage.removeItem(TOKEN_KEY);
+    if (window.showToast) window.showToast("Session expired. Please log in again.", "danger");
+    setTimeout(() => { window.location.href = "login.html"; }, 1000);
+  }
+  return response;
 };
 // --- 3. HIGHLIGHTS SECTION -------------------------------
 let galleryFilesArray = [];
@@ -78,7 +124,7 @@ window.renderGalleryPreviews = function () {
       "position: relative; display: inline-block; margin-right: 10px; margin-bottom: 10px;";
 
     wrapper.innerHTML = `
-      <img src="${imgSrc}" style="width:60px; height:60px; object-fit:cover; border-radius:4px; border: 1px solid #ddd;">
+      <img src="${resolveImageURL(imgSrc)}" style="width:60px; height:60px; object-fit:cover; border-radius:4px; border: 1px solid #ddd;">
       <button type="button" onclick="removeGalleryImage(${index})" 
         style="position: absolute; top: -5px; right: -5px; background: #ff4d4d; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
         &times;
@@ -178,7 +224,7 @@ window.editHighlight = async function (id) {
 
     if (item.image) {
       document.getElementById("poster-hidden-value").value = item.image;
-      document.getElementById("poster-preview-img").src = item.image;
+      document.getElementById("poster-preview-img").src = resolveImageURL(item.image);
       document
         .getElementById("poster-preview-container")
         .classList.remove("hidden");
@@ -220,6 +266,10 @@ if (hlForm) {
     .getElementById("gallery-upload-input")
     .addEventListener("change", (e) => {
       Array.from(e.target.files).forEach((file) => {
+        if (file.size > 3 * 1024 * 1024) {
+          window.showToast("Each gallery image must be under 3MB", "danger");
+          return;
+        }
         const reader = new FileReader();
         reader.onload = (evt) => {
           galleryFilesArray.push(evt.target.result);
@@ -293,7 +343,7 @@ window.loadProjects = async function () {
         (p) => `
             <div class="card p-3 mb-3 shadow-sm border-0">
                 <div class="d-flex align-items-center gap-3">
-                    <img src="${p.image || p.thumbnail || ""}" style="width:60px; height:60px; object-fit:cover; border-radius:5px; background:#eee;">
+                    <img src="${resolveImageURL(p.image || p.thumbnail) || "https://placehold.co/100x100?text=No+Image"}" onerror="this.src='https://placehold.co/100x100?text=No+Image'" style="width:60px; height:60px; object-fit:cover; border-radius:5px; background:#eee;">
                     <div class="flex-grow-1">
                         <h5 class="m-0 fw-bold">${p.title}</h5>
                         <small class="text-muted">${p.category}</small>
@@ -458,10 +508,9 @@ window.loadStats = async function () {
         (s) => `
             <div class="card p-3 mb-2 shadow-sm border-0 d-flex flex-row align-items-center justify-content-between">
                 <div class="d-flex align-items-center gap-3">
-                     ${s.icon
-            ? `<img src="${s.icon}" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">`
-            : '<div class="bg-light rounded-circle" style="width:35px; height:35px; display:flex; align-items:center; justify-content:center;"><i class="fas fa-chart-line text-muted"></i></div>'
-          }
+                     <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width:35px; height:35px; flex-shrink:0;">
+                       <i class="fa ${s.icon || 'fa-bar-chart'}" style="color:#fff; font-size:14px;"></i>
+                     </div>
                      <div>
                          <h5 class="mb-0 text-primary fw-bold">${s.value}</h5>
                          <small class="text-uppercase text-muted fw-bold" style="font-size: 0.7rem;">${s.label}</small>
@@ -559,6 +608,11 @@ if (statForm) {
   document.getElementById("statIconInput").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        window.showToast("Icon size limit is 3MB", "danger");
+        e.target.value = "";
+        return;
+      }
       const reader = new FileReader();
       reader.onload = (evt) => {
         document.getElementById("statIconValue").value = evt.target.result;
@@ -738,8 +792,8 @@ window.loadSkills = async function () {
             <div class="card p-3 shadow-sm border-0 h-100">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center gap-3">
-                        ${s.icon
-            ? `<img src="${s.icon}" style="width:40px; height:40px; object-fit:contain;">`
+                        ${s.icon && s.icon.trim() !== ''
+            ? `<img src="${resolveImageURL(s.icon)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" style="width:40px; height:40px; object-fit:contain;"><div class="bg-light rounded p-2" style="display:none;"><i class="fas fa-code"></i></div>`
             : '<div class="bg-light rounded p-2"><i class="fas fa-code"></i></div>'
           }
                         <div>
@@ -784,7 +838,8 @@ window.editSkill = async function (id) {
     document.getElementById("originalSkIconBase64").value = item.icon || "";
 
     if (item.icon) {
-      document.getElementById("skPreviewImg").src = item.icon;
+      const iconSrc = item.icon.startsWith('http') || item.icon.startsWith('data:') ? item.icon : '../' + item.icon;
+      document.getElementById("skPreviewImg").src = iconSrc;
       document.getElementById("skImgPreview").classList.remove("hidden");
     } else {
       document.getElementById("skImgPreview").classList.add("hidden");
@@ -1028,7 +1083,7 @@ if (videoForm) {
     const url = isEdit
       ? `${API_BASE}/admin/videos/${id}`
       : `${API_BASE}/admin/videos`;
-    const method = isEdit ? "PATCH" : "POST"; 
+    const method = isEdit ? "PATCH" : "POST";
 
     try {
       const res = await fetch(url, {
@@ -1088,7 +1143,7 @@ window.loadGallery = async function () {
     list.innerHTML = items.map((g) => `
         <div class="gallery-card shadow-sm">
             <div style="height: 180px; overflow: hidden; background: #f8f9fa;">
-                <img src="${g.image}" alt="${g.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="${resolveImageURL(g.image) || 'https://placehold.co/400x300?text=No+Image'}" onerror="this.src='https://placehold.co/400x300?text=No+Image'" alt="${g.title}" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="card-body p-3 d-flex flex-column" style="flex: 1;">
                 <h6 class="text-truncate mb-3 fw-bold" title="${g.title || ''}">${g.title || "Untitled"}</h6>
@@ -1125,9 +1180,10 @@ window.prepareEditGallery = async function (id) {
 
     const previewContainer = document.getElementById("galImgPreview");
     previewContainer.innerHTML = `
-      <div class="d-inline-block position-relative m-2">
-        <img src="${item.image}" style="height: 120px; width: 120px; object-fit: cover; border-radius: 8px; border: 2px solid #b1b493;">
-        <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle shadow-sm">Editing</span>
+      <div class="position-relative d-inline-block m-2">
+      <img src="${resolveImageURL(item.image)}" 
+           style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">
+      <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle shadow-sm">Editing</span>
       </div>`;
     previewContainer.classList.remove("hidden");
 
@@ -1283,7 +1339,7 @@ window.loadBlogs = async function () {
     list.innerHTML = `<div class="row g-3">` + items.map(b => `
       <div class="col-md-6 col-lg-4 mb-3">
         <div class="card h-100 border-0 shadow-sm">
-          <img src="${b.image}" class="card-img-top" style="height: 150px; object-fit: cover;">
+          <img src="${resolveImageURL(b.image) || 'https://placehold.co/400x300?text=No+Image'}" onerror="this.src='https://placehold.co/400x300?text=No+Image'" class="card-img-top" style="height: 150px; object-fit: cover;">
           <div class="card-body p-3">
             <h6 class="fw-bold text-truncate">${b.title}</h6>
             <p class="small text-muted mb-3">${b.category || 'Uncategorized'}</p>
@@ -1427,16 +1483,58 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // --- LOGOUT FUNCTIONALITY ---
 window.handleLogout = function () {
-  if (confirm("Are you sure you want to logout from Atul's CMS?")) {
-    // 1. Clear the Auth Token
-    localStorage.removeItem("token");
+  // 1. Clear the Auth Token
+  localStorage.removeItem("token");
 
-    // 2. Show a quick confirmation toast if your system uses them
-    if (window.showToast) window.showToast("Logged out successfully", "info");
+  // 2. Show a quick confirmation toast if your system uses them
+  if (window.showToast) window.showToast("Logged out successfully", "info");
 
-    // 3. Redirect to login page
-    setTimeout(() => {
-      window.location.href = "login.html"; // Ensure this matches your login filename
-    }, 500);
-  }
+  // 3. Redirect to login page
+  setTimeout(() => {
+    window.location.href = "login.html"; // Ensure this matches your login filename
+  }, 500);
 };
+
+// --- SECURITY (CREDENTIAL UPDATE) SECTION ---
+document.addEventListener("DOMContentLoaded", () => {
+  const secForm = document.getElementById("securityForm");
+  if (secForm) {
+    secForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const newUsername = document.getElementById("secUsername").value.trim();
+      const newPassword = document.getElementById("secPassword").value.trim();
+
+      if (!newUsername && !newPassword) {
+        window.showToast("Please provide a new username or password", "warning");
+        return;
+      }
+
+      const btn = document.getElementById("secSubmitBtn");
+      const oldText = btn.innerHTML;
+      btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>Updating...`;
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/admin/update`, {
+          method: "PUT",
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ newUsername, newPassword })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          window.showToast("Credentials updated successfully. Please login again.", "success");
+          secForm.reset();
+          setTimeout(() => { window.handleLogout(); }, 1500);
+        } else {
+          window.showToast(data.error || "Failed to update credentials", "danger");
+        }
+      } catch (err) {
+        window.showToast("Server error updating credentials", "danger");
+      } finally {
+        btn.innerHTML = oldText;
+        btn.disabled = false;
+      }
+    };
+  }
+});

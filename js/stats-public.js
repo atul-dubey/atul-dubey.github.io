@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const statsContainer = document.getElementById("public-stats-container");
-  const API_URL = "${API_BASE}/public/stats";
+  const _apiBase = (window.portfolioConfig && window.portfolioConfig.API_BASE) ? window.portfolioConfig.API_BASE : '/api';
+  const API_URL = `${_apiBase}/public/stats`;
 
   if (!statsContainer) return;
 
@@ -21,10 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 <div class="col-md-6 col-lg-4 ftco-animate">
     <div class="stat-item d-flex align-items-center mb-5">
         <div class="stat-icon-wrap shadow-sm me-4">
-            ${s.icon
-            ? `<img src="${s.icon}" class="stat-custom-icon">`
-            : '<i class="fa fa-bar-chart"></i>'
-          }
+            <i class="fa ${s.icon || 'fa-bar-chart'}"></i>
         </div>
         <div class="stat-text-wrap">
             <strong class="number" 
