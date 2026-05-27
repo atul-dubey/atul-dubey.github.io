@@ -1,9 +1,8 @@
 // js/config.js
 const CONFIG = {
-    // When testing locally, use: "http://127.0.0.1:5050/api"
-    // For test deployment,  Vercel URL:
-    API_BASE: window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
-        ? 'http://localhost:5050/api' 
+    // Dynamically uses the current domain for Vercel/localhost, otherwise fall back to the Vercel production API
+    API_BASE: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.includes('vercel.app'))
+        ? window.location.origin + '/api'
         : 'https://atul-dubey-github-io.vercel.app/api'
 };
 
