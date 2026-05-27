@@ -61,7 +61,7 @@ const createHighlight = async (req, res) => {
     // Handle Poster Image (Safe Access)
     let imagePath = "";
     if (req.files?.['poster']?.[0]) {
-      imagePath = `${req.protocol}://${req.get('host')}/uploads/${req.files['poster'][0].filename}`;
+      imagePath = req.files['poster'][0].path;
     } else if (req.body.image) {
       imagePath = req.body.image;
     }
@@ -69,7 +69,7 @@ const createHighlight = async (req, res) => {
     // Handle Gallery Images
     let galleryPaths = [];
     if (req.files?.['gallery']) {
-      galleryPaths = req.files['gallery'].map(f => `${req.protocol}://${req.get('host')}/uploads/${f.filename}`);
+      galleryPaths = req.files['gallery'].map(f => f.path);
     }
 
     const highlightData = {
@@ -120,7 +120,7 @@ const updateHighlight = async (req, res) => {
 
     // Update Poster Image
     if (req.files?.['poster']?.[0]) {
-      updates.image = `${req.protocol}://${req.get('host')}/uploads/${req.files['poster'][0].filename}`;
+      updates.image = req.files['poster'][0].path;
     } else if (req.body.image) {
       updates.image = req.body.image;
     }
@@ -138,7 +138,7 @@ const updateHighlight = async (req, res) => {
     // 2. Handle New Uploaded Images
     let newImages = [];
     if (req.files?.['gallery']) {
-      newImages = req.files['gallery'].map(f => `${req.protocol}://${req.get('host')}/uploads/${f.filename}`);
+      newImages = req.files['gallery'].map(f => f.path);
     }
 
     // 3. Merge: If we have kept images OR new images, update the field.
