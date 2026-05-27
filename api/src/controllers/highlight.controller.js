@@ -1,4 +1,5 @@
 const Highlight = require("../models/Highlight");
+const { uploadBase64, uploadBase64Batch } = require("../services/cloudinary.service");
 
 // --- Helper: Parse Tags ---
 // Handles "tag1, tag2" string OR ["tag1", "tag2"] array
@@ -63,13 +64,17 @@ const createHighlight = async (req, res) => {
     if (req.files?.['poster']?.[0]) {
       imagePath = req.files['poster'][0].path;
     } else if (req.body.image) {
-      imagePath = req.body.image;
+      imagePath = await uploadBase64(req.body.image, "atul_portfolio/highlights");
     }
 
     // Handle Gallery Images
     let galleryPaths = [];
     if (req.files?.['gallery']) {
       galleryPaths = req.files['gallery'].map(f => f.path);
+    } else if (req.body.gallery) {
+      const rawGallery = Array.isArray(req.body.gallery) ? req.body.gallery : [req.body.gallery];
+      const validGalleryBase64 = rawGallery.filter(img => img && img.trim() !== "");
+      galleryPaths = await uploadBase64Batch(validGalleryBase64, "atul_portfolio/highlights");
     }
 
     const highlightData = {
@@ -122,30 +127,27 @@ const updateHighlight = async (req, res) => {
     if (req.files?.['poster']?.[0]) {
       updates.image = req.files['poster'][0].path;
     } else if (req.body.image) {
-      updates.image = req.body.image;
+      updates.image = await uploadBase64(req.body.image, "atul_portfolio/highlights");
     }
 
     // --- Gallery Update (Critical Fixes) ---
-    // 1. Handle Kept Images (Existing URLs sent from frontend)
-    let keptImages = [];
+    // 1. Handle Kept/New Images in req.body.gallery
+    let galleryPaths = [];
     if (req.body.gallery) {
-       // Ensure we handle both single string and array of strings
        const rawGallery = Array.isArray(req.body.gallery) ? req.body.gallery : [req.body.gallery];
-       // Filter out empty strings if any
-       keptImages = rawGallery.filter(img => img && img.trim() !== "");
+       const validGallery = rawGallery.filter(img => img && img.trim() !== "");
+       galleryPaths = await uploadBase64Batch(validGallery, "atul_portfolio/highlights");
     }
     
-    // 2. Handle New Uploaded Images
+    // 2. Handle New Uploaded Images from multipart form
     let newImages = [];
     if (req.files?.['gallery']) {
       newImages = req.files['gallery'].map(f => f.path);
     }
 
     // 3. Merge: If we have kept images OR new images, update the field.
-    // Note: If you want to delete ALL images, the frontend should send an empty gallery array or we might need specific logic.
-    // Currently, this updates if there is at least one image to set.
-    if (keptImages.length > 0 || newImages.length > 0) {
-      updates.gallery = [...keptImages, ...newImages];
+    if (galleryPaths.length > 0 || newImages.length > 0) {
+      updates.gallery = [...galleryPaths, ...newImages];
     } else if (req.body.gallery === "") {
         // Explicit clear if frontend sent empty string for gallery
         updates.gallery = [];

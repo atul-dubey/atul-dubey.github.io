@@ -1,4 +1,5 @@
 const Stat = require("../models/Stat");
+const { uploadBase64 } = require("../services/cloudinary.service");
 
 // 1. Get All Stats
 exports.getStats = async (req, res) => {
@@ -14,7 +15,13 @@ exports.getStats = async (req, res) => {
 exports.createStat = async (req, res) => {
   try {
     const { value, label, icon, order } = req.body;
-    const newStat = await Stat.create({ value, label, icon, order });
+    
+    let iconUrl = icon;
+    if (icon) {
+      iconUrl = await uploadBase64(icon, "atul_portfolio/stats");
+    }
+
+    const newStat = await Stat.create({ value, label, icon: iconUrl, order });
     res.status(201).json(newStat);
   } catch (err) {
     res.status(400).json({ message: "Error creating stat", error: err.message });
@@ -29,7 +36,7 @@ exports.updateStat = async (req, res) => {
 
     // Update icon if provided
     if (icon) {
-      updates.icon = icon;
+      updates.icon = await uploadBase64(icon, "atul_portfolio/stats");
     }
 
     const updatedStat = await Stat.findByIdAndUpdate(

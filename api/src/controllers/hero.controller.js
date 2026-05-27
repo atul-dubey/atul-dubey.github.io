@@ -1,4 +1,5 @@
 const Hero = require("../models/Hero");
+const { uploadBase64 } = require("../services/cloudinary.service");
 
 // 1. Get Hero Data
 exports.getHero = async (req, res) => {
@@ -34,7 +35,7 @@ exports.updateHero = async (req, res) => {
     };
 
     if (image && image.length > 100) {
-      heroData.image = image;
+      heroData.image = await uploadBase64(image, "atul_portfolio/hero");
     }
 
     const updatedHero = await Hero.findOneAndUpdate(

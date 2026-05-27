@@ -1,4 +1,5 @@
 const Skill = require("../models/Skill");
+const { uploadBase64 } = require("../services/cloudinary.service");
 
 // 1. Get All Skills
 exports.getSkills = async (req, res) => {
@@ -14,7 +15,13 @@ exports.getSkills = async (req, res) => {
 exports.createSkill = async (req, res) => {
   try {
     const { title, description, icon, order } = req.body;
-    const newSkill = await Skill.create({ title, description, icon, order });
+
+    let iconUrl = icon;
+    if (icon) {
+      iconUrl = await uploadBase64(icon, "atul_portfolio/skills");
+    }
+
+    const newSkill = await Skill.create({ title, description, icon: iconUrl, order });
     res.status(201).json(newSkill);
   } catch (err) {
     res.status(400).json({ message: "Error creating skill", error: err.message });
@@ -29,7 +36,7 @@ exports.updateSkill = async (req, res) => {
 
     // Update icon if provided (supports both file paths and base64)
     if (icon) {
-      updates.icon = icon;
+      updates.icon = await uploadBase64(icon, "atul_portfolio/skills");
     }
 
     const updatedSkill = await Skill.findByIdAndUpdate(

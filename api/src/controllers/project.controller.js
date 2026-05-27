@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const { uploadBase64 } = require("../services/cloudinary.service");
 
 // --- Helper: Clean Array Strings ---
 const parseTech = (input) => {
@@ -53,7 +54,10 @@ exports.createProject = async (req, res) => {
     const { title, category, technologies, summary, description, link } = req.body;
     
     // If Cloudinary uploaded a file, use the Cloudinary URL. Otherwise fallback to body.
-    const imageUrl = req.file ? req.file.path : req.body.image;
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/projects");
+    }
 
     const newProject = await Project.create({
       title,
@@ -91,9 +95,9 @@ exports.updateProject = async (req, res) => {
       updates.slug = generateSlug(title);
     }
 
-    const imageUrl = req.file ? req.file.path : req.body.image;
+    let imageUrl = req.file ? req.file.path : req.body.image;
     if (imageUrl) {
-      updates.thumbnail = imageUrl;
+      updates.thumbnail = await uploadBase64(imageUrl, "atul_portfolio/projects");
     }
 
     const updatedProject = await Project.findByIdAndUpdate(

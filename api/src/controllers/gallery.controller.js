@@ -1,4 +1,5 @@
 const Gallery = require("../models/Gallery");
+const { uploadBase64, uploadBase64Batch } = require("../services/cloudinary.service");
 
 // 1. Get all images
 exports.getGallery = async (req, res) => {
@@ -17,7 +18,10 @@ exports.addImage = async (req, res) => {
     const { title } = req.body;
     
     // Check for single file upload from Cloudinary, fallback to body
-    const imageUrl = req.file ? req.file.path : req.body.image;
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/gallery");
+    }
 
     // Batch Upload Logic
     if (req.files && Array.isArray(req.files) && req.files.length > 0) {
@@ -26,8 +30,9 @@ exports.addImage = async (req, res) => {
       );
       return res.status(201).json(createdImages);
     } else if (req.body.images && Array.isArray(req.body.images) && req.body.images.length > 0) {
+      const uploadedUrls = await uploadBase64Batch(req.body.images, "atul_portfolio/gallery");
       const createdImages = await Promise.all(
-        req.body.images.map(imgData => Gallery.create({ title, image: imgData }))
+        uploadedUrls.map(url => Gallery.create({ title, image: url }))
       );
       return res.status(201).json(createdImages);
     }
@@ -50,7 +55,10 @@ exports.updateImage = async (req, res) => {
   try {
     const { id } = req.params;
     const { title } = req.body;
-    const imageUrl = req.file ? req.file.path : req.body.image;
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/gallery");
+    }
 
     const updates = { title };
     if (imageUrl) {
