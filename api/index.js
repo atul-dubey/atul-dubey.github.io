@@ -10,11 +10,12 @@ const connectDB = async () => {
     return;
   }
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+    await mongoose.connect(mongoUri);
     isConnected = true;
-    console.log(" MongoDB Connected");
+    console.log("✅ MongoDB Connected");
   } catch (err) {
-    console.error(" DB Error:", err.message);
+    console.error("❌ DB Error:", err.message);
     throw err;
   }
 };

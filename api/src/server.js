@@ -14,14 +14,15 @@ const connectDB = async () => {
   }
 
   try {
+    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
     // 2. Check if the Variable exists
-    if (!process.env.MONGO_URI) {
-      console.error("FATAL ERROR: MONGO_URI is missing in Vercel Settings!");
+    if (!mongoUri) {
+      console.error("FATAL ERROR: MONGO_URI or MONGODB_URI is missing in environment variables!");
       return; 
     }
 
     // 3. Connect safely
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(mongoUri);
     console.log(" MongoDB Connected Successfully");
 
   } catch (err) {
