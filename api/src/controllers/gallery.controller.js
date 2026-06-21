@@ -1,4 +1,5 @@
 const Gallery = require("../models/Gallery");
+const { uploadBase64, uploadBase64Batch } = require("../services/cloudinary.service");
 
 // 1. Get all images
 exports.getGallery = async (req, res) => {
@@ -14,22 +15,34 @@ exports.getGallery = async (req, res) => {
 exports.addImage = async (req, res) => {
   try {
     //  Using 'image' (singular) to match Model, 'images' (plural) for batch logic
-    const { title, image, images } = req.body;
+    const { title } = req.body;
+    
+    // Check for single file upload from Cloudinary, fallback to body
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/gallery");
+    }
 
     // Batch Upload Logic
-    if (images && Array.isArray(images) && images.length > 0) {
+    if (req.files && Array.isArray(req.files) && req.files.length > 0) {
       const createdImages = await Promise.all(
-        images.map(imgData => Gallery.create({ title, image: imgData }))
+        req.files.map(file => Gallery.create({ title, image: file.path }))
+      );
+      return res.status(201).json(createdImages);
+    } else if (req.body.images && Array.isArray(req.body.images) && req.body.images.length > 0) {
+      const uploadedUrls = await uploadBase64Batch(req.body.images, "atul_portfolio/gallery");
+      const createdImages = await Promise.all(
+        uploadedUrls.map(url => Gallery.create({ title, image: url }))
       );
       return res.status(201).json(createdImages);
     }
 
     // Single Upload Logic
-    if (!image) {
+    if (!imageUrl) {
       return res.status(400).json({ message: "Image data is required" });
     }
 
-    const newImage = await Gallery.create({ title, image });
+    const newImage = await Gallery.create({ title, image: imageUrl });
     res.status(201).json(newImage);
   } catch (err) {
     console.error("Upload Error:", err); // Log for debugging
@@ -41,11 +54,20 @@ exports.addImage = async (req, res) => {
 exports.updateImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, image } = req.body;
+    const { title } = req.body;
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/gallery");
+    }
+
+    const updates = { title };
+    if (imageUrl) {
+      updates.image = imageUrl;
+    }
 
     const updatedImage = await Gallery.findByIdAndUpdate(
       id,
-      { title, image },
+      updates,
       { new: true }
     );
 

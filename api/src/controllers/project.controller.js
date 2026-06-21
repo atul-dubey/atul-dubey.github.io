@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const { uploadBase64 } = require("../services/cloudinary.service");
 
 // --- Helper: Clean Array Strings ---
 const parseTech = (input) => {
@@ -50,7 +51,13 @@ exports.getProjectById = async (req, res) => {
 // 3. Create Project
 exports.createProject = async (req, res) => {
   try {
-    const { title, category, technologies, summary, description, link, image } = req.body;
+    const { title, category, technologies, summary, description, link } = req.body;
+    
+    // If Cloudinary uploaded a file, use the Cloudinary URL. Otherwise fallback to body.
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      imageUrl = await uploadBase64(imageUrl, "atul_portfolio/projects");
+    }
 
     const newProject = await Project.create({
       title,
@@ -59,7 +66,7 @@ exports.createProject = async (req, res) => {
       technologies: parseTech(technologies),
       summary,
       description,
-      thumbnail: image,
+      thumbnail: imageUrl,
       links: { live: link }
     });
 
@@ -73,7 +80,7 @@ exports.createProject = async (req, res) => {
 // 4. Update Project
 exports.updateProject = async (req, res) => {
   try {
-    const { title, category, technologies, summary, description, link, image } = req.body;
+    const { title, category, technologies, summary, description, link } = req.body;
 
     const updates = {
       title,
@@ -88,8 +95,9 @@ exports.updateProject = async (req, res) => {
       updates.slug = generateSlug(title);
     }
 
-    if (image) {
-      updates.thumbnail = image;
+    let imageUrl = req.file ? req.file.path : req.body.image;
+    if (imageUrl) {
+      updates.thumbnail = await uploadBase64(imageUrl, "atul_portfolio/projects");
     }
 
     const updatedProject = await Project.findByIdAndUpdate(
